@@ -18,9 +18,9 @@ SLF4J는 로깅 Facade입니다. 로깅에 대한 추상 레이어를 제공하�
 pom.xml에 아래 의존을 추가합니다.
 ```
 	<dependency>
-         <groupId>org.slf4j</groupId>
-         <artifactId>slf4j-api</artifactId>
-         <version>1.7.7</version>
+    	<groupId>org.slf4j</groupId>
+    	<artifactId>slf4j-api</artifactId>
+    	<version>1.7.7</version>
 	</dependency>
 ```
 하지만 실행을 한다면.
@@ -36,6 +36,7 @@ SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".SLF4J: Defaultin
         <version>1.1.2</version>
   	</dependency>
 ```
+## logback 사용
 
 logback은 slf4j-api 1.7.6에 의존합니다. slf4j특성상 다양항 로깅 구현체를 쓸수 있는 형태라 대부분 slf4j-api와 logback 을 동시에 의존성 추가합니다.
 ```
@@ -146,12 +147,14 @@ if (logger.isdebugenabled()) {
 	logger.debug("log test " + String.valueOf(1) + "count.");
 }
 ```
-로 연산을 막는 구조이지만 코드의 흐름을 방해하게 됩니다.
+조건절 로 연산을 막는 구조이지만 코드의 흐름을 방해하게 됩니다.
 
-여기서 SLF4J는 String parameter 를 제공합니다.
+여기서 SLF4J는 String parameter arguments 를 제공합니다.
 ```
 logger.debug("log test {} count", 1);
 ```
-이렇게 되면 실제 String format연산을 debug가 실행될때 처리하게 뒤로 미룰수 있습니다.
+이렇게 되면 실제 String format연산을 debug가 실행하기전으로 미룰수 있습니다.
 
-이상 끝. 다음번에는 logback 관련 포스팅을 할예정입니다.
+관련소스는 https://github.com/sonegy/slf4j-sample/tree/master 에 등록 되었습니다.
+
+다음번에는 logback 관련 포스팅을 할예정입니다.
