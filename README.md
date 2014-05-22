@@ -157,4 +157,4 @@ logger.debug("log test {} count", 1);
 
 관련소스는 https://github.com/sonegy/slf4j-sample/tree/master 에 등록 되었습니다.
 
-다음번에는 logback 관련 포스팅을 할예정입니다.
+다음에는 logback 관련 포스팅을 해볼까 하네요.
