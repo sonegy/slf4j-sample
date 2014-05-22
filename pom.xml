@@ -11,7 +11,6 @@
     <properties>
         <version.jdk>1.7</version.jdk>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.slf4j>1.7.7</version.slf4j>
         <version.logback>1.1.2</version.logback>
     </properties>
 
@@ -22,19 +21,30 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>3.2.4.RELEASE</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>${version.slf4j}</version>
+            <version>1.7.7</version>
         </dependency>
-<!--        <dependency>
+        <dependency>
             <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>${version.slf4j}</version>
-        </dependency>&ndash;&gt;-->
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>1.7.7</version>
+        </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>${version.logback}</version>
+            <version>1.1.2</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.slf4j</groupId>
