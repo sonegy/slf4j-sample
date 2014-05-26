@@ -11,9 +11,9 @@
 - logback
 	- http://logback.qos.ch/
 
-무엇을 쓸지는 크게 상관없지만 어플리케이션을 개발할때는 한가지 선택 해야하고, 중요한 것은 의존된 라이브러리가 쓰고 있는 logging도 잘 확인해봐 됩니다. 섞어 쓸수도 있지만, logging을 제어하려면 하나로 통일 되야 좋습니다. 여기서 내가 쓰고 싶은 로거로 통일하고 싶다면 방법은 SLF4J를 쓰면 되는것 입니다.
+무엇을 쓸지는 크게 상관없지만 어플리케이션을 개발할때는 한가지 선택 해야하고, 중요한 것은 의존된 라이브러리가 쓰고 있는 Logger도 잘 확인해야 합니다. 섞어 쓸 수도 있지만, logging을 제어하려면 하나로 통일 되야 좋습니다. 여기서 내가 쓰고 싶은 Logger로 통일하고 싶다면 방법은 SLF4J를 쓰면 되는 것 입니다.
 
-SLF4J는 로깅 Facade입니다. 로깅에 대한 추상 레이어를 제공하는것이고 java로 따지면 interface덩어리라고 보시면 됩니다. artifactId이름도 api라고 부릅니다.
+SLF4J는 로깅 Facade입니다. 로깅에 대한 추상 레이어를 제공하는것이고 java로 따지면 interface덩어리 라고 보시면 됩니다. artifact이름도 api라고 부릅니다.
 
 pom.xml에 아래 의존을 추가합니다.
 ```
@@ -25,10 +25,20 @@ pom.xml에 아래 의존을 추가합니다.
 ```
 하지만 실행을 한다면.
 ```
+	import org.slf4j.Logger;
+    import org.slf4j.LoggerFactory;
+    public class Sample {
+    	final Logger logger = LoggerFactory.getLogger(Sample.class);
+        public void run() {
+        	logger.debug("debug");
+	        logger.info("info");
+        }
+    }
+```
+```
 SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".SLF4J: Defaulting to no-operation (NOP) logger implementationSLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
 ```
-
-위와 같은 구현체가 없다는 에러를 내보냅니다. 간단하게 slf4j-simple을 추가 할수도 있지만, 현실적으로 이걸 쓸이유는 없으니. 바로 slf4j native 구현체인 ==logback== 을 사용하도록 하겠습니다.
+위와 같은 구현체가 없다는 에러를 내보냅니다. 간단하게 slf4j-simple을 추가 할 수도 있지만, 현실적으로 이것을 쓸이유는 없으니(기능이 너무 단순함). 바로 slf4j native 구현체인 ==logback== 을 사용하도록 하겠습니다.
 ```
 	<dependency>
     	<groupId>ch.qos.logback</groupId>
@@ -60,17 +70,7 @@ logback은 slf4j-api 1.7.6에 의존합니다. slf4j특성상 다양항 로깅 �
     </dependencies>
 ```
 우리가 작성하고 있는 어플리케이션 레이어에서는 SLF4J를 사용해서 logging처리를 하면 실제 로그가 출력하는 행위는 logback이 하게 됩니다.
-```
-	import org.slf4j.Logger;
-    import org.slf4j.LoggerFactory;
-    public class Sample {
-    	final Logger logger = LoggerFactory.getLogger(Sample.class);
-        public void run() {
-        	logger.debug("debug");
-	        logger.info("info");
-        }
-    }
-```
+
 이제 흔하디 흔한 spring 한번 추가해보면.
 ```
     <dependency>
@@ -79,7 +79,7 @@ logback은 slf4j-api 1.7.6에 의존합니다. slf4j특성상 다양항 로깅 �
         <version>3.2.4.RELEASE</version>
     </dependency>
 ```
-하지만 spring-context는 jarkarta commons logging을 사용하고 있습니다. 실제 이렇게 두면 commons-logging이 의존성에 추가 됩니다. 여기서는 loback을 쓰려고 하니 관련라이브러리는 제거합니다.
+하지만 spring-context는 jarkarta commons logging을 사용하고 있습니다. 실제 이렇게 두면 commons-logging이 의존성에 추가 됩니다. 여기서는 logback을 쓰려고 하니 관련라이브러리는 제거합니다.
 ```
     <dependency>
         <groupId>org.springframework</groupId>
@@ -93,6 +93,7 @@ logback은 slf4j-api 1.7.6에 의존합니다. slf4j특성상 다양항 로깅 �
         </exclusions>
     </dependency>
 ```
+
 그러나 아래 Spring관련 코드가 실행을 하면 문제가 발생합니다.
 ```
     StaticApplicationContext context = new StaticApplicationContext();
