@@ -35,7 +35,7 @@ pom.xml에 아래 의존을 추가합니다.
         }
     }
 ```
-```
+```console
 SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".SLF4J: Defaulting to no-operation (NOP) logger implementationSLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
 ```
 위와 같은 구현체가 없다는 에러를 내보냅니다. 간단하게 slf4j-simple을 추가 할 수도 있지만, 현실적으로 이것을 쓸이유는 없으니(기능이 너무 단순함). 바로 slf4j native 구현체인 ==logback== 을 사용하도록 하겠습니다.
@@ -101,7 +101,7 @@ logback은 slf4j-api 1.7.6에 의존합니다. slf4j특성상 다양항 로깅 �
     context.getBean("test", Sample.class);
 ```
 결과
-```
+```console
 Exception in thread "main" java.lang.NoClassDefFoundError: org/apache/commons/logging/LogFactory
      at org.springframework.context.support.AbstractApplicationContext.<init>(AbstractApplicationContext.java:164)
 ```
